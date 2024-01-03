@@ -5,10 +5,10 @@ import main.Config;
 
 public class StudentUtil {
     public static Student fillStudent() {
-        String name = InputUtil.requireText("Telebenin adini daxil edin");
-        String surname = InputUtil.requireText("Telebenin soyadini daxil edin");
-        int age = InputUtil.requireNumber("Telebenin yasini daxil edin");
-        String className = InputUtil.requireText("Telebenin sinfini daxil edin");
+        String name = InputUtil.requireName();
+        String surname = InputUtil.requireSurname();
+        int age = InputUtil.requireAge();
+        String className = InputUtil.requireClassName();
 
         return new Student(name, surname, age, className);
     }
@@ -19,7 +19,7 @@ public class StudentUtil {
         }
         for (int i = 0; i < Config.students.length; i++) {
             Student s = Config.students[i];
-            System.out.println(s.getFullInfo());
+            System.out.println((i + 1) + ". " + s.getFullInfo());
         }
     }
 
@@ -71,5 +71,28 @@ public class StudentUtil {
         }
 
         return students;
+    }
+
+    public static void updateStudent() {
+        StudentUtil.printAllStudents();
+        int i = InputUtil.requireNumber("Necenci telebede deyisiklik etmek isteyirsiniz?");
+        System.out.println("Yeni melumatlar:");
+
+        Student s = Config.students[i - 1];
+
+        String changeParams = InputUtil.requireText("Deyismek istediyiniz melumatlari daxil edin. meselen: 'ad','soyad','yas','sinif'");
+
+        if (changeParams.contains("'ad'")) {
+            s.setName(InputUtil.requireName());
+        }
+        if (changeParams.contains("'soyad'")) {
+            s.setSurname(InputUtil.requireSurname());
+        }
+        if (changeParams.contains("'yas'")) {
+            s.setAge(InputUtil.requireAge());
+        }
+        if (changeParams.contains("'sinif'")) {
+            s.setClassName(InputUtil.requireClassName());
+        }
     }
 }
